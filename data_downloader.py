@@ -41,5 +41,7 @@ def download_prices():
 
 if __name__ == "__main__":
     prices = download_prices()
+    prices.to_csv(PRICE_FILE)
+    print(f"Saved price data to {PRICE_FILE}")
     print(prices.head())
     print(prices.tail())
