@@ -28,6 +28,9 @@ def optimize_weights(window_prices):
     mean_returns = returns.mean()
     cov_matrix = returns.cov()
 
+    # Handle numerical issues in covariance
+    cov_matrix = cov_matrix.replace([np.inf, -np.inf], np.nan).fillna(0.0)
+
     num_assets = len(mean_returns)
     initial_weights = np.array([1.0 / num_assets] * num_assets)
 
@@ -59,3 +62,4 @@ def generate_mvo_weights(price_data):
         weights_by_date[current_date] = weights
 
     return pd.DataFrame(weights_by_date).T
+
