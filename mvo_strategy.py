@@ -56,6 +56,8 @@ def generate_mvo_weights(price_data):
     weights_by_date = {}
 
     for i in range(LOOKBACK_DAYS, len(price_data)):
+    if price_data.iloc[i - LOOKBACK_DAYS:i].isnull().values.any():
+        continue
         current_date = price_data.index[i]
         window_prices = price_data.iloc[i - LOOKBACK_DAYS:i]
         weights = optimize_weights(window_prices)
