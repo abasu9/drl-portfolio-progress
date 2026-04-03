@@ -19,18 +19,27 @@ def download_prices():
     )
 
     if isinstance(data.columns, pd.MultiIndex):
-        prices = data["Close"].copy()
+        if "Close" in data.columns.get_level_values(0):
+            prices = data["Close"].copy()
+        else:
+            prices = data.xs(TICKERS[0], axis=1, level=1, drop_level=False).copy()
     else:
         prices = data.copy()
 
+    prices = prices.sort_index()
     prices = prices.dropna(how="all")
-    prices = prices.ffill().dropna()
+    prices = prices.ffill()
 
-    prices.to_csv(PRICE_FILE)
-    print(f"Saved price data to {PRICE_FILE}")
-    print(prices.head())
-    print(prices.tail())
+    missing_counts = prices.isna().sum()
+    print("Missing values per ticker before final cleanup:")
+    print(missing_counts)
+
+    prices = prices.dropna()
+
+    return prices
 
 
 if __name__ == "__main__":
-    download_prices()
+    prices = download_prices()
+    print(prices.head())
+    print(prices.tail())
