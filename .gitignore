@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+venv/
+tensorboard_log/
+.DS_Store
+datasets/features_data.csv

@@ -1,0 +1,6 @@
+Strategy,Cumulative Return (%),Annualized Return (%),Annualized Volatility (%),Sharpe Ratio,Sortino Ratio,Max Drawdown (%),Calmar Ratio
+A2C,44.56,20.32,25.75,0.8478,0.9107,30.83,0.6592
+PPO,50.11,22.62,25.53,0.9273,1.0143,29.94,0.7554
+DDPG,51.67,23.26,25.51,0.9482,1.042,30.48,0.763
+Equal Weight,50.08,22.56,25.53,0.9254,1.0118,29.98,0.7525
+Max Sharpe (MVO),64.91,28.48,33.75,0.919,1.0935,33.2,0.8579
