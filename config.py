@@ -1,86 +1,56 @@
-# config.py
+"""Configuration for DRL Portfolio Allocation."""
 
-# -----------------------------
-# Data settings
-# -----------------------------
-
+# Dow Jones 30 tickers
 DOW_30_TICKERS = [
-    "AAPL", "MSFT", "JPM", "V", "JNJ", "WMT", "PG", "UNH",
-    "HD", "DIS", "MA", "NVDA", "PYPL", "BAC", "VZ",
-    "ADBE", "CMCSA", "NFLX", "KO", "PFE", "PEP",
-    "T", "INTC", "CSCO", "ABT", "CRM", "XOM",
-    "CVX", "MRK", "NKE"
+    "AAPL", "AMGN", "AXP", "BA", "CAT", "CRM", "CSCO", "CVX", "DIS", "DOW",
+    "GS", "HD", "HON", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM",
+    "MRK", "MSFT", "NKE", "PG", "TRV", "UNH", "V", "VZ", "WBA", "WMT",
 ]
 
-TICKERS = DOW_30_TICKERS
-
+# Date ranges
 TRAIN_START_DATE = "2009-01-01"
-TRAIN_END_DATE = "2019-12-31"
-TEST_START_DATE = "2020-01-01"
-TEST_END_DATE = "2021-12-31"
+TRAIN_END_DATE = "2020-07-01"
+TEST_START_DATE = "2020-07-01"
+TEST_END_DATE = "2020-12-31"
 
-START_DATE = TRAIN_START_DATE
-END_DATE = TEST_END_DATE
-
-PRICE_FILE = "prices.csv"
-
-# -----------------------------
-# Portfolio settings
-# -----------------------------
-
-INITIAL_AMOUNT = 100000
-INITIAL_CAPITAL = INITIAL_AMOUNT
-
-LOOKBACK_WINDOW = 252
-LOOKBACK_DAYS = 60
-
-TRADING_DAYS_PER_YEAR = 252
-RISK_FREE_RATE = 0.0
-TRANSACTION_COST_PCT = 0.001
-REWARD_SCALING = 1e-4
-
-# -----------------------------
 # Technical indicators
-# -----------------------------
-
 TECHNICAL_INDICATORS = [
-    "macd",
-    "rsi_14",
-    "cci_14",
-    "adx_14",
-    "sma_20",
-    "ema_20",
-    "bbands_upper",
-    "bbands_lower",
-    "atr_14",
-    "obv",
+    "macd", "rsi_14", "cci_14", "adx_14",
+    "sma_20", "ema_20", "bbands_upper", "bbands_lower",
+    "atr_14", "obv",
 ]
 
-# -----------------------------
-# DRL model parameters
-# -----------------------------
-
-TIMESTEPS = {
-    "a2c": 5000,
-    "ppo": 5000,
-    "ddpg": 5000,
-}
-
+# Training parameters
 A2C_PARAMS = {
     "n_steps": 5,
+    "ent_coef": 0.005,
     "learning_rate": 0.0007,
-    "gamma": 0.99,
 }
 
 PPO_PARAMS = {
     "n_steps": 2048,
+    "ent_coef": 0.005,
+    "learning_rate": 0.0003,
     "batch_size": 64,
-    "learning_rate": 0.00025,
-    "gamma": 0.99,
 }
 
 DDPG_PARAMS = {
+    "batch_size": 128,
+    "buffer_size": 50000,
     "learning_rate": 0.001,
-    "gamma": 0.99,
-    "buffer_size": 10000,
 }
+
+TIMESTEPS = {
+    "a2c": 100000,
+    "ppo": 100000,
+    "ddpg": 50000,
+}
+
+# Portfolio parameters
+INITIAL_AMOUNT = 1000000
+TRANSACTION_COST_PCT = 0.001
+REWARD_SCALING = 1e-4
+LOOKBACK_WINDOW = 252  # 1 year for covariance matrix
+
+# Risk-free rate for Sharpe ratio
+RISK_FREE_RATE = 0.02
